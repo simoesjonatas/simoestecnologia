@@ -128,3 +128,4 @@ venv.bak/
 *.sqlite
 *.sqlite3
 *.db
+staticfiles
