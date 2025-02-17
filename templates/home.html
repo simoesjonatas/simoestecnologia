@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simões Tecnologia - Desenvolvimento de Software</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <a href="/" class="logo">
+                <img src="{% static 'images/simoeslogo2.png' %}" alt="Logo Simões Tecnologia" class="logo-image">
+            </a>
+            <ul class="nav-links">
+                <li><a href="#services">Serviços</a></li>
+                <li><a href="#about">Sobre</a></li>
+                <li><a href="#contact">Contato</a></li>
+            </ul>
+        </nav>
+        <div class="hero">
+            <h1>Desenvolvimento de Software</h1>
+            <p>Soluções personalizadas para atender às suas necessidades empresariais.</p>
+            <a href="#contact" class="cta-button">Entre em contato</a>
+        </div>
+    </header>
+    <main>
+        <section id="services" class="services">
+            <h2>Nossos Serviços</h2>
+            <div class="services-container">
+                <article class="service-item">
+                    <h3>Desenvolvimento Web</h3>
+                    <p>Transforme sua visão em realidade com nossos serviços de desenvolvimento web. Criamos soluções digitais sob medida, desde sites institucionais até sistemas empresariais complexos, todos projetados para serem visualmente impressionantes, altamente funcionais e otimizados para seu negócio.</p>
+                </article>
+                <article class="service-item">
+                    <h3>Aplicativos Mobile</h3>
+                    <p>Elevamos o padrão do engajamento digital com nossos aplicativos mobile. Desenvolvemos apps personalizados para iOS e Android, focados em usabilidade e experiência do usuário, incorporando as mais recentes tecnologias para garantir desempenho e segurança.</p>
+                </article>
+                <article class="service-item">
+                    <h3>Consultoria Técnica</h3>
+                    <p>Nossa consultoria técnica vai além do suporte tradicional. Oferecemos análises detalhadas e estratégias adaptadas para cada cliente, garantindo que suas soluções tecnológicas estejam alinhadas com os objetivos do negócio e prontas para escalar conforme necessário.</p>
+                </article>
+                <article class="service-item">
+                    <h3>Serviço de Infraestrutura</h3>
+                    <p>Maximize a eficiência e a estabilidade da sua infraestrutura de TI com nossa consultoria e gerenciamento. Cuidamos de tudo, desde o planejamento estratégico até a implementação e monitoramento contínuo, garantindo que sua infraestrutura suporte de forma confiável todas as operações da sua empresa.</p>
+                </article>
+            </div>
+        </section>
+        
+        
+        <section id="about" class="about">
+            <h2>Quem Somos</h2>
+            <p>Com mais de uma década liderando inovações, a Simões Tecnologia é comprometida em entregar soluções de software que transformam negócios. Nos especializamos em superar desafios técnicos com soluções criativas e eficientes.</p>
+            <div class="card-container">
+                <div class="about-card">
+                    <h3>Missão</h3>
+                    <p>Facilitar o acesso à tecnologia avançada, oferecendo produtos que revolucionam operações empresariais.</p>
+                </div>
+                <div class="about-card">
+                    <h3>Visão</h3>
+                    <p>Ambicionar ser a referência global em inovação tecnológica e qualidade de serviço.</p>
+                </div>
+                <div class="about-card">
+                    <h3>Valores</h3>
+                    <p>Inovação contínua, integridade absoluta, compromisso com o sucesso do cliente e colaboração interna.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="contact" class="contact">
+            <h2>Entre em Contato</h2>
+            <p>Preencha o formulário abaixo e entraremos em contato o mais breve possível:</p>
+            <form action="{% url 'contato' %}" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="submit-button">Enviar</button>
+            </form>
+        </section>
+    </main>
+    <footer class="footer">
+        <p>&copy; 2025 Simões Tecnologia. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>
