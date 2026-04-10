@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from .forms import ContatoForm
 
 def contato_view(request):
@@ -6,7 +7,9 @@ def contato_view(request):
         form = ContatoForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('home')  # Redireciona para uma URL de sucesso, por exemplo
+            messages.success(request, 'Valeu! Sua mensagem foi enviada com sucesso. Entraremos em contato em breve!')
+            return redirect('home')
     else:
         form = ContatoForm()
     return render(request, 'contato.html', {'form': form})
+
