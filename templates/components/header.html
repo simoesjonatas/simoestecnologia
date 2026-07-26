@@ -2,7 +2,7 @@
 <header class="site-header" data-header>
     <nav class="site-nav" aria-label="Navegação principal">
         <a class="brand" href="{% url 'home' %}" aria-label="Simões Tecnologia - início">
-            <img src="{% static 'images/simoeslogo2.png' %}" alt="Simões Tecnologia" width="196" height="97">
+            <img src="{% static 'images/simoeslogo2.png' %}?v={{ site.asset_version }}" alt="Simões Tecnologia" width="196" height="97">
         </a>
 
         <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" data-nav-toggle>
