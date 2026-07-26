@@ -3,6 +3,7 @@ from .models import Contato
 
 @admin.register(Contato)
 class ContatoAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'message')  # Campos para mostrar na listagem
-    search_fields = ('name', 'email')  # Campos por onde a busca pode ser feita
-    list_filter = ('email',)  # Filtros disponíveis na barra lateral
+    list_display = ("name", "organization", "email", "whatsapp", "solution_type", "created_at")
+    search_fields = ("name", "organization", "email", "whatsapp", "message")
+    list_filter = ("solution_type", "created_at")
+    readonly_fields = ("created_at",)

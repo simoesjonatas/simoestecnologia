@@ -1,0 +1,24 @@
+{% load static %}
+<header class="site-header" data-header>
+    <nav class="site-nav" aria-label="Navegação principal">
+        <a class="brand" href="{% url 'home' %}" aria-label="Simões Tecnologia - início">
+            <img src="{% static 'images/simoeslogo2.png' %}" alt="Simões Tecnologia" width="196" height="97">
+        </a>
+
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" data-nav-toggle>
+            <span class="sr-only">Abrir menu</span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <div class="nav-panel" id="primary-navigation" data-nav-panel>
+            <ul class="nav-list">
+                {% for item in nav_items %}
+                    <li><a href="{{ item.href }}">{{ item.label }}</a></li>
+                {% endfor %}
+            </ul>
+            <a class="btn btn-small btn-primary" href="/#contato">Fale conosco</a>
+        </div>
+    </nav>
+</header>

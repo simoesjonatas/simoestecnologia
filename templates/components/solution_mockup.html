@@ -1,0 +1,31 @@
+<div class="mockup accent-{{ solution.accent }}">
+    <div class="mockup-toolbar">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <div class="mockup-body">
+        <div class="mockup-sidebar">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="mockup-content">
+            <p>{{ solution.mockup.title }}</p>
+            <h3>{{ solution.mockup.primary }}</h3>
+            <div class="mockup-list">
+                {% for row in solution.mockup.rows %}
+                    <div>
+                        <span></span>
+                        <strong>{{ row }}</strong>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="mockup-tags">
+                {% for tag in solution.mockup.tags %}
+                    <span>{{ tag }}</span>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

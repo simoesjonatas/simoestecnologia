@@ -1,0 +1,31 @@
+<article class="solution-card accent-{{ solution.accent }} reveal">
+    <div class="solution-card-top">
+        <span class="solution-icon" aria-hidden="true">{{ solution.icon }}</span>
+        <div>
+            <h3>{{ solution.name }}</h3>
+            <p>{{ solution.subtitle }}</p>
+        </div>
+    </div>
+
+    <p class="solution-description">{{ solution.short_description }}</p>
+
+    <div class="feature-preview">
+        <strong>Funcionalidades</strong>
+        <ul>
+            {% for feature in solution.features|slice:":4" %}
+                <li>{{ feature }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="audience-preview">
+        <strong>Público atendido</strong>
+        <p>
+            {% for audience in solution.audience %}
+                {{ audience }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+    </div>
+
+    <a class="card-link" href="{% url 'solution_detail' solution.slug %}">Conhecer solução</a>
+</article>

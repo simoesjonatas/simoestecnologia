@@ -1,0 +1,19 @@
+<section class="section section-light" id="apresentacao">
+    <div class="container split-section">
+        <div class="section-heading reveal">
+            <p class="eyebrow">Como pensamos tecnologia</p>
+            <h2>Sistemas criados para problemas reais</h2>
+            <p>Na Simões Tecnologia, não desenvolvemos apenas telas. Entendemos o processo da empresa, identificamos gargalos e criamos uma solução adaptada à operação.</p>
+        </div>
+
+        <div class="pillar-grid">
+            {% for pillar in pillars %}
+                <article class="pillar-card reveal">
+                    <span>{{ pillar.label }}</span>
+                    <h3>{{ pillar.title }}</h3>
+                    <p>{{ pillar.text }}</p>
+                </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>

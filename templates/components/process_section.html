@@ -1,0 +1,19 @@
+<section class="section section-light process-section" id="processo">
+    <div class="container">
+        <div class="section-heading centered reveal">
+            <p class="eyebrow">Como trabalhamos</p>
+            <h2>Da necessidade à solução</h2>
+            <p>Um processo claro para transformar conhecimento operacional em sistemas confiáveis.</p>
+        </div>
+
+        <div class="process-track">
+            {% for step in process_steps %}
+                <article class="process-step reveal">
+                    <span>{{ forloop.counter|stringformat:"02d" }}</span>
+                    <h3>{{ step.title }}</h3>
+                    <p>{{ step.text }}</p>
+                </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>

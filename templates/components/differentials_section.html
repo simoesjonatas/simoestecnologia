@@ -1,0 +1,18 @@
+<section class="section section-dark differentials-section">
+    <div class="container split-section">
+        <div class="section-heading reveal">
+            <p class="eyebrow">Diferenciais</p>
+            <h2>Por que desenvolver com a Simões Tecnologia?</h2>
+            <p>O foco é construir tecnologia próxima do processo, com atenção à segurança, rastreabilidade e evolução da solução.</p>
+        </div>
+
+        <div class="differentials-list">
+            {% for item in differentials %}
+                <div class="differential-item reveal">
+                    <span aria-hidden="true"></span>
+                    <p>{{ item }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

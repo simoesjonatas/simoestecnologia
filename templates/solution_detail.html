@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="solution-hero accent-{{ solution.accent }}">
+    <div class="container solution-hero-layout">
+        <div class="solution-hero-copy reveal">
+            <a class="back-link" href="/#solucoes">Voltar para soluções</a>
+            <p class="eyebrow">{{ solution.subtitle }}</p>
+            <h1>{{ solution.name }}</h1>
+            <p>{{ solution.short_description }}</p>
+            <div class="hero-actions">
+                <a class="btn btn-primary" href="#contato">Solicitar conversa</a>
+                <a class="btn btn-secondary on-dark" href="/#solucoes">Ver outras soluções</a>
+            </div>
+        </div>
+        <div class="reveal">
+            {% include "components/solution_mockup.html" %}
+        </div>
+    </div>
+</section>
+
+<section class="section section-light">
+    <div class="container problem-grid">
+        <article class="text-panel reveal">
+            <p class="eyebrow">O problema</p>
+            <h2>Quando o processo fica espalhado, a operação perde controle</h2>
+            <p>{{ solution.problem }}</p>
+        </article>
+
+        <article class="text-panel reveal">
+            <p class="eyebrow">A solução</p>
+            <h2>Um sistema desenhado para a rotina real</h2>
+            <p>{{ solution.solution }}</p>
+            <strong>{{ solution.highlight }}</strong>
+        </article>
+    </div>
+</section>
+
+<section class="section solution-detail-section">
+    <div class="container detail-layout">
+        <div class="detail-main reveal">
+            <p class="eyebrow">Funcionalidades</p>
+            <h2>Recursos que organizam a operação</h2>
+            <div class="feature-grid full">
+                {% for feature in solution.features %}
+                    <div class="feature-chip">{{ feature }}</div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <aside class="detail-aside reveal">
+            <div>
+                <h2>Benefícios</h2>
+                <ul class="check-list">
+                    {% for benefit in solution.benefits %}
+                        <li>{{ benefit }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div>
+                <h2>Público atendido</h2>
+                <ul class="check-list">
+                    {% for audience in solution.audience %}
+                        <li>{{ audience }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </aside>
+    </div>
+</section>
+
+<section class="section section-light mockup-explainer">
+    <div class="container split-section">
+        <div class="section-heading reveal">
+            <p class="eyebrow">Exemplo visual</p>
+            <h2>Interfaces demonstrativas, sem dados reais</h2>
+            <p>Os componentes abaixo representam a estrutura de uma solução personalizada, sem exibir informações de clientes ou telas confidenciais.</p>
+        </div>
+        <div class="reveal">
+            {% include "components/solution_mockup.html" %}
+        </div>
+    </div>
+</section>
+
+<section class="cta-section compact">
+    <div class="container cta-inner reveal">
+        <div>
+            <p class="eyebrow">Próximo passo</p>
+            <h2>Quer adaptar uma solução como {{ solution.name }} para a sua operação?</h2>
+            <p>Compartilhe o contexto do processo e vamos avaliar o caminho mais adequado para transformar a rotina em sistema.</p>
+        </div>
+        <div class="cta-actions">
+            <a class="btn btn-primary" href="#contato">Falar sobre esta solução</a>
+            <a class="btn btn-secondary on-dark" href="/#solucoes">Retornar às soluções</a>
+        </div>
+    </div>
+</section>
+
+{% include "components/contact_section.html" %}
+{% endblock %}

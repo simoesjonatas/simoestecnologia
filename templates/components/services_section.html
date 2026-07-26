@@ -1,0 +1,19 @@
+<section class="section services-section" id="servicos">
+    <div class="container">
+        <div class="section-heading reveal">
+            <p class="eyebrow">Serviços</p>
+            <h2>Desenvolvimento, implantação e evolução técnica</h2>
+            <p>Além dos produtos, atuamos na criação de plataformas, integrações e infraestrutura para sustentar operações digitais.</p>
+        </div>
+
+        <div class="services-grid">
+            {% for service in services %}
+                <article class="service-card reveal">
+                    <span>{{ forloop.counter|stringformat:"02d" }}</span>
+                    <h3>{{ service.title }}</h3>
+                    <p>{{ service.text }}</p>
+                </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>

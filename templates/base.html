@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title }}</title>
+    <meta name="description" content="{{ page_description }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <meta property="og:locale" content="pt_BR">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{ site.name }}">
+    <meta property="og:title" content="{{ page_title }}">
+    <meta property="og:description" content="{{ page_description }}">
+    <meta property="og:url" content="{{ canonical_url }}">
+    <meta property="og:image" content="{{ og_image }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ page_title }}">
+    <meta name="twitter:description" content="{{ page_description }}">
+    <meta name="twitter:image" content="{{ og_image }}">
+    <link rel="icon" href="{% static 'images/js.ico' %}">
+    <link rel="preload" href="{% static 'images/simoeslogo2.png' %}" as="image">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script type="application/ld+json">{{ organization_schema|safe }}</script>
+    <script type="application/ld+json">{{ software_schema|safe }}</script>
+</head>
+<body>
+    <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+    {% include "components/header.html" %}
+
+    {% if messages %}
+        <div class="site-messages" role="status" aria-live="polite">
+            {% for message in messages %}
+                <p class="site-message {{ message.tags }}">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <main id="conteudo">
+        {% block content %}{% endblock %}
+    </main>
+
+    {% include "components/footer.html" %}
+    {% include "components/whatsapp_button.html" %}
+    <script src="{% static 'js/site.js' %}" defer></script>
+</body>
+</html>
