@@ -1,4 +1,4 @@
-<form class="contact-form" action="{% url 'contato' %}" method="post" id="contact-form" novalidate data-contact-form>
+<form class="contact-form" action="{% url 'contato' %}#contato" method="post" id="contact-form" novalidate data-contact-form>
     {% csrf_token %}
 
     <div class="hidden-field" aria-hidden="true">
@@ -65,8 +65,11 @@
     </div>
 
     {% if recaptcha_enabled %}
-        <div class="captcha-field">
+        <div class="captcha-field{% if form.recaptcha_token.errors %} has-error{% endif %}" data-captcha-field>
             <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
+            {% for error in form.recaptcha_token.errors %}
+                <p class="field-error">{{ error }}</p>
+            {% endfor %}
         </div>
     {% endif %}
 

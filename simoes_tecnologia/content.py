@@ -13,7 +13,7 @@ SITE = {
         "Desenvolvimento de sistemas web e mobile, automação de processos, "
         "controle de produção, gestão de cobranças, escalas, condomínios e eventos."
     ),
-    "asset_version": "20260725-2",
+    "asset_version": "20260726-1",
     "email": "",
     "whatsapp_number": WHATSAPP_NUMBER,
     "whatsapp_url": f"https://wa.me/{WHATSAPP_NUMBER}?text={quote(WHATSAPP_MESSAGE)}",

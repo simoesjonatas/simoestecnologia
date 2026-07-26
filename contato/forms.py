@@ -114,7 +114,7 @@ class ContatoForm(forms.ModelForm):
         cleaned_data = super().clean()
 
         if settings.RECAPTCHA_ENABLED and not self._recaptcha_is_valid():
-            raise forms.ValidationError("Confirme que você não é um robô.")
+            self.add_error("recaptcha_token", "Confirme que você não é um robô.")
 
         return cleaned_data
 

@@ -1010,6 +1010,13 @@ button {
     overflow-x: auto;
 }
 
+.captcha-field.has-error {
+    border: 1px solid rgba(180, 35, 24, 0.24);
+    border-radius: var(--radius);
+    background: rgba(180, 35, 24, 0.05);
+    padding: 12px;
+}
+
 .btn-submit {
     width: fit-content;
     min-width: 180px;

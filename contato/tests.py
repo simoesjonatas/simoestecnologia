@@ -103,6 +103,7 @@ class InstitucionalSiteTests(TestCase):
         self.assertEqual(response.status_code, 400)
         self.assertEqual(Contato.objects.count(), 0)
         self.assertContains(response, "Confirme que você não é um robô.", status_code=400)
+        self.assertContains(response, "data-captcha-field", status_code=400)
 
     def test_seo_support_routes(self):
         robots = self.client.get(reverse("robots_txt"))

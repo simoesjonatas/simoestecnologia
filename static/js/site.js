@@ -84,6 +84,7 @@
         });
         contactForm.querySelectorAll("[aria-invalid='true']").forEach(function (input) {
             input.removeAttribute("aria-invalid");
+            input.removeAttribute("aria-describedby");
         });
     }
 
@@ -102,8 +103,40 @@
         input.setAttribute("aria-describedby", id);
     }
 
+    function addCaptchaError(message) {
+        const captchaField = contactForm.querySelector("[data-captcha-field]");
+        if (!captchaField) return null;
+
+        const error = document.createElement("p");
+        error.className = "field-error";
+        error.textContent = message;
+        error.setAttribute("data-client-error", "true");
+        captchaField.appendChild(error);
+        captchaField.classList.add("has-error");
+        captchaField.scrollIntoView({ behavior: "smooth", block: "center" });
+        return captchaField;
+    }
+
+    function captchaIsChecked() {
+        const captchaField = contactForm.querySelector("[data-captcha-field]");
+        if (!captchaField) return true;
+
+        if (!window.grecaptcha || typeof window.grecaptcha.getResponse !== "function") {
+            return false;
+        }
+
+        return Boolean(window.grecaptcha.getResponse());
+    }
+
     function isValidEmail(value) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+    }
+
+    const firstServerError = contactForm.querySelector(".has-error, .form-alert");
+    if (firstServerError) {
+        window.setTimeout(function () {
+            firstServerError.scrollIntoView({ behavior: "smooth", block: "center" });
+        }, 120);
     }
 
     contactForm.addEventListener("submit", function (event) {
@@ -132,8 +165,14 @@
             }
         });
 
+        let captchaInvalid = false;
+        if (!firstInvalid && !captchaIsChecked()) {
+            captchaInvalid = true;
+            addCaptchaError("Confirme que você não é um robô.");
+        }
+
         const lastSubmit = Number(window.sessionStorage.getItem("simoes-contact-submit") || 0);
-        if (!firstInvalid && Date.now() - lastSubmit < 25000) {
+        if (!firstInvalid && !captchaInvalid && Date.now() - lastSubmit < 25000) {
             event.preventDefault();
             const message = document.createElement("div");
             message.className = "form-alert";
@@ -141,6 +180,11 @@
             message.setAttribute("data-client-error", "true");
             message.innerHTML = "<p>Aguarde alguns segundos antes de enviar uma nova mensagem.</p>";
             contactForm.prepend(message);
+            return;
+        }
+
+        if (captchaInvalid) {
+            event.preventDefault();
             return;
         }
 
