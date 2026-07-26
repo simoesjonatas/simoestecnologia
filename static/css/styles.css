@@ -1005,6 +1005,11 @@ button {
     padding: 14px;
 }
 
+.captcha-field {
+    min-height: 78px;
+    overflow-x: auto;
+}
+
 .btn-submit {
     width: fit-content;
     min-width: 180px;

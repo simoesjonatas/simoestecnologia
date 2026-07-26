@@ -40,6 +40,14 @@ CSRF_TRUSTED_ORIGINS = [
     'https://www.simoesti.com.br',
 ]
 
+RECAPTCHA_SITE_KEY = os.environ.get("RECAPTCHA_SITE_KEY", "")
+RECAPTCHA_SECRET_KEY = os.environ.get("RECAPTCHA_SECRET_KEY", "")
+RECAPTCHA_VERIFY_URL = os.environ.get(
+    "RECAPTCHA_VERIFY_URL",
+    "https://www.google.com/recaptcha/api/siteverify",
+)
+RECAPTCHA_ENABLED = bool(RECAPTCHA_SITE_KEY and RECAPTCHA_SECRET_KEY)
+
 
 # Application definition
 

@@ -1,5 +1,6 @@
 import json
 
+from django.conf import settings
 from django.http import Http404, HttpResponse
 from django.shortcuts import render
 
@@ -56,6 +57,8 @@ def build_page_context(request, **extra):
             "og_image": f"{SITE['domain'].rstrip('/')}/static/images/simoeslogo2.png",
             "organization_schema": json.dumps(_organization_schema(), ensure_ascii=False),
             "software_schema": json.dumps(_software_schema(solution), ensure_ascii=False),
+            "recaptcha_enabled": settings.RECAPTCHA_ENABLED,
+            "recaptcha_site_key": settings.RECAPTCHA_SITE_KEY,
         }
     )
     context.update(extra)

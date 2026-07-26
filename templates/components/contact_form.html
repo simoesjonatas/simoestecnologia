@@ -64,6 +64,12 @@
         {% endfor %}
     </div>
 
+    {% if recaptcha_enabled %}
+        <div class="captcha-field">
+            <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
+        </div>
+    {% endif %}
+
     <button class="btn btn-primary btn-submit" type="submit" data-submit-button data-default-text="Enviar mensagem" data-loading-text="Enviando...">
         Enviar mensagem
     </button>

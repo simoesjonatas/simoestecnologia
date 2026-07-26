@@ -10,7 +10,7 @@ from simoes_tecnologia.views import build_page_context
 
 def contato_view(request):
     if request.method == "POST":
-        form = ContatoForm(request.POST)
+        form = ContatoForm(request.POST, remote_ip=get_client_ip(request))
         last_submission = request.session.get("last_contact_submission", 0)
         is_repeated = time.time() - float(last_submission or 0) < 25
 
@@ -33,3 +33,10 @@ def contato_view(request):
         )
 
     return redirect(f"{reverse('home')}#contato")
+
+
+def get_client_ip(request):
+    forwarded_for = request.META.get("HTTP_X_FORWARDED_FOR")
+    if forwarded_for:
+        return forwarded_for.split(",")[0].strip()
+    return request.META.get("REMOTE_ADDR")

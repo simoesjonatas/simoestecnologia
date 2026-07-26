@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from django.urls import reverse
 
 from simoes_tecnologia.content import SOLUTIONS
@@ -61,6 +61,48 @@ class InstitucionalSiteTests(TestCase):
         self.assertEqual(response.status_code, 400)
         self.assertEqual(Contato.objects.count(), 0)
         self.assertContains(response, "Informe um e-mail válido.", status_code=400)
+
+    def test_contact_form_rejects_crypto_spam_pattern(self):
+        response = self.client.post(
+            reverse("contato"),
+            data={
+                "name": "LarryBuics",
+                "organization": "LarryBuics",
+                "email": "tracey37usmc@live.com",
+                "whatsapp": "85821519882",
+                "solution_type": "gestao-cobrancas",
+                "message": (
+                    "Earn $1,500 per day or more by reviewing crypto projects "
+                    "https://telegra.ph/Collect-cryptocurrency-automatically-every-day"
+                ),
+            },
+        )
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(Contato.objects.count(), 0)
+        self.assertContains(response, "A mensagem parece ser spam.", status_code=400)
+
+    @override_settings(
+        RECAPTCHA_ENABLED=True,
+        RECAPTCHA_SITE_KEY="site-key-test",
+        RECAPTCHA_SECRET_KEY="secret-key-test",
+    )
+    def test_contact_form_requires_recaptcha_when_enabled(self):
+        response = self.client.post(
+            reverse("contato"),
+            data={
+                "name": "Cliente Teste",
+                "organization": "Empresa Teste",
+                "email": "cliente@example.com",
+                "whatsapp": "(11) 99999-9999",
+                "solution_type": "fabriq",
+                "message": "Quero organizar um processo produtivo.",
+            },
+        )
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(Contato.objects.count(), 0)
+        self.assertContains(response, "Confirme que você não é um robô.", status_code=400)
 
     def test_seo_support_routes(self):
         robots = self.client.get(reverse("robots_txt"))

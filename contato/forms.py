@@ -1,7 +1,23 @@
+import json
+from urllib import parse, request
+from urllib.error import URLError
+
+from django.conf import settings
 from django import forms
 
 from .models import Contato
 from simoes_tecnologia.content import CONTACT_SOLUTION_CHOICES
+
+
+SPAM_MESSAGE_INDICATORS = (
+    "collect-cryptocurrency",
+    "cryptocurrency",
+    "reviewing crypto",
+    "earn $",
+    "per day",
+    "message-id",
+    "telegra.ph",
+)
 
 
 class ContatoForm(forms.ModelForm):
@@ -69,6 +85,7 @@ class ContatoForm(forms.ModelForm):
         }
 
     def __init__(self, *args, **kwargs):
+        self.remote_ip = kwargs.pop("remote_ip", None)
         super().__init__(*args, **kwargs)
         self.fields["organization"].required = True
         self.fields["whatsapp"].required = True
@@ -79,6 +96,53 @@ class ContatoForm(forms.ModelForm):
         if website:
             raise forms.ValidationError("Não foi possível enviar a mensagem.")
         return website
+
+    def clean_message(self):
+        message = self.cleaned_data.get("message", "")
+        normalized_message = message.lower()
+        spam_score = sum(1 for item in SPAM_MESSAGE_INDICATORS if item in normalized_message)
+        link_count = normalized_message.count("http://") + normalized_message.count("https://")
+
+        if spam_score >= 2 or (spam_score >= 1 and link_count >= 1):
+            raise forms.ValidationError(
+                "A mensagem parece ser spam. Revise o conteúdo ou fale pelo WhatsApp."
+            )
+
+        return message
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        if settings.RECAPTCHA_ENABLED and not self._recaptcha_is_valid():
+            raise forms.ValidationError("Confirme que você não é um robô.")
+
+        return cleaned_data
+
+    def _recaptcha_is_valid(self):
+        token = self.data.get("g-recaptcha-response", "")
+        if not token:
+            return False
+
+        payload = parse.urlencode(
+            {
+                "secret": settings.RECAPTCHA_SECRET_KEY,
+                "response": token,
+                "remoteip": self.remote_ip or "",
+            }
+        ).encode()
+
+        try:
+            verify_request = request.Request(
+                settings.RECAPTCHA_VERIFY_URL,
+                data=payload,
+                headers={"Content-Type": "application/x-www-form-urlencoded"},
+            )
+            with request.urlopen(verify_request, timeout=5) as response:
+                result = json.loads(response.read().decode("utf-8"))
+        except (OSError, URLError, json.JSONDecodeError):
+            return False
+
+        return result.get("success") is True
 
     def save(self, commit=True):
         self.cleaned_data.pop("recaptcha_token", None)

@@ -23,6 +23,9 @@
     <link rel="stylesheet" href="{% static 'css/styles.css' %}?v={{ site.asset_version }}">
     <script type="application/ld+json">{{ organization_schema|safe }}</script>
     <script type="application/ld+json">{{ software_schema|safe }}</script>
+    {% if recaptcha_enabled %}
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    {% endif %}
 </head>
 <body>
     <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
